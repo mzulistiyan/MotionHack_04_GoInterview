@@ -18,12 +18,14 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       User? user = FirebaseAuth.instance.currentUser;
       if (user == null) {
+        print("Kosong");
         Navigator.pushNamedAndRemoveUntil(
             context, '/sign-in', (route) => false);
       } else {
+        print(user.email);
         context.read<AuthCubit>().getCurrentUser(user.uid);
         Navigator.pushNamedAndRemoveUntil(
-            context, '/home-page', (route) => false);
+            context, '/main-page', (route) => false);
       }
     });
     super.initState();

@@ -37,7 +37,7 @@ class CustomBottomNav extends StatelessWidget {
             decoration: BoxDecoration(
                 color: context.read<PageCubit>().state == index
                     ? Colors.red
-                    : Colors.grey,
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(12)),
           )
         ],

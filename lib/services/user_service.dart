@@ -24,6 +24,7 @@ class UserService {
         id: id,
         email: snapshot['email'],
         name: snapshot['name'],
+        level: snapshot['level'],
       );
     } catch (e) {
       throw e;

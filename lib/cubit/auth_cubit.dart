@@ -15,6 +15,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     try {
       emit(AuthLoading());
+      Future.delayed(Duration(seconds: 10));
       UserModel user = await AuthService().signIn(
         email: email,
         password: password,
@@ -33,6 +34,7 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     try {
       emit(AuthLoading());
+      Future.delayed(Duration(seconds: 10));
       UserModel user = await AuthService().signUp(
         email: email,
         password: password,
@@ -47,6 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
   void signOut() async {
     try {
       emit(AuthLoading());
+
       await AuthService().signOut();
       emit(AuthInitial());
     } catch (e) {

@@ -1,55 +1,34 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/cubit/auth_cubit.dart';
-import 'package:flutter_application_motionhack/cubit/coba_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/humanresources_cubit.dart';
-import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
-import 'package:flutter_application_motionhack/model/transaction_model.dart';
 import 'package:flutter_application_motionhack/model/user_hr_model.dart';
 import 'package:flutter_application_motionhack/model/user_model.dart';
 import 'package:flutter_application_motionhack/pages/widget/list_hr_card.dart';
-import 'package:flutter_application_motionhack/pages/widget/list_user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class InterviewerListPage extends StatefulWidget {
+  const InterviewerListPage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _InterviewerListPageState createState() => _InterviewerListPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _InterviewerListPageState extends State<InterviewerListPage> {
   void initState() {
     // TODO: implement initState
-
     context.read<HumanresourcesCubit>().fetchHumanResources();
-    context.read<TransactionCubit>().fetchTransaction();
-    context.read<CobaCubit>().fetchCoba();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget listHR(List<UserHrModel> userHr) {
-      final List<UserHrModel> user;
+    Widget listHR(
+      List<UserHrModel> userHr,
+    ) {
       return Container(
           child: Column(
-        children: userHr.map((
-          UserHrModel userHr,
-        ) {
+        children: userHr.map((UserHrModel userHr) {
           return ListHr(userHr);
-        }).toList(),
-      ));
-    }
-
-    Widget listTransaction(List<TransactionModel> userId) {
-      final List<TransactionModel> user;
-      return Container(
-          child: Column(
-        children: userId.map((
-          TransactionModel userId,
-        ) {
-          return ListUser(userId);
         }).toList(),
       ));
     }
@@ -57,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
-          if (state is AuthSuccess) {
+          if (state is AuthSuccess && state.user.level == 1) {
             return SafeArea(
               child: Center(
                 child: Column(
@@ -80,6 +59,7 @@ class _HomePageState extends State<HomePage> {
                           return Column(
                             children: [
                               listHR(state.humanresources),
+                              Text('Hallo')
                             ],
                           );
                         }
@@ -120,63 +100,14 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       },
-                    ),
-                    BlocConsumer<CobaCubit, CobaState>(
-                      listener: (context, state) {
-                        // TODO: implement listener
-                        if (state is CobaFailed) {
-                          print('error');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(state.error),
-                            ),
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is CobaSuccess) {
-                          return Column(
-                            children: [
-                              Text('Hallos'),
-                            ],
-                          );
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    ),
-                    BlocConsumer<TransactionCubit, TransactionState>(
-                      listener: (context, state) {
-                        // TODO: implement listener
-                        if (state is TransactionFailed) {
-                          print('error');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(state.error),
-                            ),
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is TransactionSuccess) {
-                          return Column(
-                            children: [listTransaction(state.transactions)],
-                          );
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    ),
+                    )
                   ],
                 ),
               ),
             );
+          } else {
+            return SizedBox();
           }
-          return SizedBox();
         },
       ),
     );

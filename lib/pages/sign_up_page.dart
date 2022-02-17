@@ -119,7 +119,7 @@ class SignUpPage extends StatelessWidget {
                   // TODO: implement listener
                   if (state is AuthSuccess) {
                     Navigator.pushNamedAndRemoveUntil(
-                        context, '/home-page', (route) => false);
+                        context, '/main-page', (route) => false);
                   } else if (state is AuthFailed) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

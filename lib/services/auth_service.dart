@@ -34,7 +34,7 @@ class AuthService {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       UserModel user = UserModel(
-          id: userCredential.user!.uid, email: email, name: name, level: "1");
+          id: userCredential.user!.uid, email: email, name: name, level: 1);
       await UserService().setUser(user);
 
       return user;
