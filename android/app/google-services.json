@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "206796128509",
+    "project_id": "flutter-motionhack",
+    "storage_bucket": "flutter-motionhack.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206796128509:android:49f47414557e0280f7fe94",
+        "android_client_info": {
+          "package_name": "com.kerjago.flutter_application_motionhack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206796128509-2dqad4bivpom38ukv84js34tnpo4s0rt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6iBx3gcbTbMpAvwdeq1NVxWlI8auiXD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206796128509-2dqad4bivpom38ukv84js34tnpo4s0rt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
