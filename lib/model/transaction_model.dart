@@ -7,6 +7,7 @@ class TransactionModel extends Equatable {
   final String userHrId;
   final String nameUser;
   final String nameHR;
+  final String position;
   final int price;
   final String fileResume;
   final String fileMotivationLetter;
@@ -19,6 +20,7 @@ class TransactionModel extends Equatable {
     required this.userHrId,
     required this.nameUser,
     required this.nameHR,
+    required this.position,
     required this.fileResume,
     required this.fileMotivationLetter,
     required this.filePortofolio,
@@ -34,6 +36,7 @@ class TransactionModel extends Equatable {
         userId: json['userId'].toString(),
         userHrId: json['userHrId'].toString(),
         nameHR: json['nameHR'].toString(),
+        position: json['position'].toString(),
         fileResume: json['fileResume'].toString(),
         fileMotivationLetter: json['fileMotivationLetter'].toString(),
         filePortofolio: json['filePortofolio'].toString(),
@@ -48,6 +51,7 @@ class TransactionModel extends Equatable {
         'userId': userId,
         'userHrId': userHrId,
         'nameHR': nameHR,
+        'position': position,
         'fileResume': fileResume,
         'fileMotivationLetter': fileMotivationLetter,
         'filePortofolio': filePortofolio,
@@ -63,6 +67,7 @@ class TransactionModel extends Equatable {
         userId,
         userHrId,
         nameHR,
+        position,
         fileResume,
         fileMotivationLetter,
         filePortofolio,

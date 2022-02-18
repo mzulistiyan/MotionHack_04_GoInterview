@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushNamedAndRemoveUntil(
             context, '/sign-in', (route) => false);
       } else {
-        print(user.email);
+        print(user);
         context.read<AuthCubit>().getCurrentUser(user.uid);
         Navigator.pushNamedAndRemoveUntil(
             context, '/main-page', (route) => false);

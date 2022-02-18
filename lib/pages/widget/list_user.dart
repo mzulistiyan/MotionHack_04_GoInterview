@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_motionhack/cubit/page_cubit.dart';
+
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
-import 'package:flutter_application_motionhack/model/user_hr_model.dart';
-import 'package:flutter_application_motionhack/model/user_model.dart';
-import 'package:flutter_application_motionhack/pages/detail_interview.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_application_motionhack/pages/interview_waiting_page.dart';
 
 class ListUser extends StatelessWidget {
   final TransactionModel userHr;
@@ -15,8 +12,10 @@ class ListUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(context,
-        //     MaterialPageRoute(builder: (context) => DetailInterviewer(userHr)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => InterviewWaitingPage(userHr)));
       },
       child: Container(
         margin: EdgeInsets.all(20),
@@ -25,6 +24,8 @@ class ListUser extends StatelessWidget {
         child: Column(
           children: [
             Text(userHr.nameUser),
+            Text(userHr.id),
+            Text(userHr.confirmation_status)
           ],
         ),
       ),

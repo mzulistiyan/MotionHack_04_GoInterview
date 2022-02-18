@@ -15,6 +15,7 @@ class PaymentPage extends StatelessWidget {
         children: [
           Text('userHrId : ${transaction.userHrId}'),
           Text(transaction.nameUser),
+          Text(transaction.position),
           Text(transaction.userId),
           Text(transaction.nameHR),
           Text(transaction.fileResume),

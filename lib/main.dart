@@ -6,6 +6,7 @@ import 'package:flutter_application_motionhack/cubit/humanresources_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/page_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
 import 'package:flutter_application_motionhack/pages/detail_interview.dart';
+import 'package:flutter_application_motionhack/pages/home_hr_page.dart';
 import 'package:flutter_application_motionhack/pages/home_page.dart';
 import 'package:flutter_application_motionhack/pages/main_page.dart';
 import 'package:flutter_application_motionhack/pages/sign_in_page.dart';
@@ -53,7 +54,10 @@ class MyApp extends StatelessWidget {
           '/sign-in': (context) => SignInPage(),
           '/home-page': (context) => HomePage(),
           '/success-page': (context) => SuccessPage(),
+          '/home-hr-page': (context) => HomeHrPage(),
         },
+
+        supportedLocales: [Locale('en', 'US')], //, Locale('pt', 'BR')],
       ),
     );
   }

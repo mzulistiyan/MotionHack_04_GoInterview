@@ -9,7 +9,16 @@ class SuccessPage extends StatelessWidget {
       body: SafeArea(
           child: Center(
         child: Column(
-          children: [Text('SUCCESS PAGE')],
+          children: [
+            Text(
+              'SUCCESS PAGEs',
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/main-page');
+                },
+                child: Text('Home'))
+          ],
         ),
       )),
     );

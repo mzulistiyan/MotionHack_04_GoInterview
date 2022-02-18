@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:dropdown_below/dropdown_below.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/cubit/auth_cubit.dart';
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
 import 'package:flutter_application_motionhack/model/user_hr_model.dart';
 import 'package:flutter_application_motionhack/model/user_model.dart';
-import 'package:flutter_application_motionhack/pages/file_list.dart';
-import 'package:flutter_application_motionhack/pages/file_picker.dart';
+
 import 'package:flutter_application_motionhack/pages/payment_page.dart';
 
 import 'package:flutter_application_motionhack/services/transaction_service.dart';
@@ -25,46 +25,6 @@ class DetailInterviewer extends StatefulWidget {
 }
 
 class _DetailInterviewerState extends State<DetailInterviewer> {
-  List _testList = [
-    {'no': 1, 'keyword': 'Front End Developer'},
-    {'no': 2, 'keyword': 'Back End Developer'},
-    {'no': 3, 'keyword': 'UI Designer'},
-    {'no': 4, 'keyword': 'UX Designer'}
-  ];
-  List<DropdownMenuItem<Object?>> _dropdownTestItems = [];
-  var _selectedTest;
-
-  @override
-  void initState() {
-    _dropdownTestItems = buildDropdownTestItems(_testList);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  List<DropdownMenuItem<Object?>> buildDropdownTestItems(List _testList) {
-    List<DropdownMenuItem<Object?>> items = [];
-    for (var i in _testList) {
-      items.add(
-        DropdownMenuItem(
-          value: i,
-          child: Text(i['keyword']),
-        ),
-      );
-    }
-    return items;
-  }
-
-  onChangeDropdownTests(selectedTest) {
-    print(selectedTest);
-    setState(() {
-      _selectedTest = selectedTest;
-    });
-  }
-
   String fileType = 'All';
   var fileTypeList = ['All', 'Image', 'Video', 'Audio', 'MultipleFile'];
 
@@ -72,6 +32,14 @@ class _DetailInterviewerState extends State<DetailInterviewer> {
   PlatformFile? resume;
   PlatformFile? motivation_letter;
   PlatformFile? portofolio;
+
+  String? selectedValue;
+  List<String> items = [
+    'UI Designer',
+    'Front End Developer',
+    'Back End Developer',
+    'UX Designer',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -91,46 +59,87 @@ class _DetailInterviewerState extends State<DetailInterviewer> {
                     Center(
                         child: Column(
                       children: [
-                        DropdownBelow(
-                          dropdownColor: Colors.white,
-                          itemWidth: 250,
-                          itemTextstyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                          boxTextstyle: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black),
-                          boxPadding: EdgeInsets.fromLTRB(13, 12, 13, 12),
-                          boxWidth: 250,
-                          boxHeight: 45,
-                          boxDecoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border:
-                                  Border.all(width: 1, color: Colors.black)),
-                          icon: Icon(
-                            Icons.settings,
-                            color: Colors.white54,
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton2(
+                            isExpanded: true,
+                            hint: Row(
+                              children: const [
+                                Icon(
+                                  Icons.list,
+                                  size: 16,
+                                  color: Colors.yellow,
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'Select Item',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.yellow,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            items: items
+                                .map((item) => DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(
+                                        item,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ))
+                                .toList(),
+                            value: selectedValue,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedValue = value as String;
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.arrow_forward_ios_outlined,
+                            ),
+                            iconSize: 14,
+                            iconEnabledColor: Colors.yellow,
+                            iconDisabledColor: Colors.grey,
+                            buttonHeight: 50,
+                            buttonWidth: 160,
+                            buttonPadding:
+                                const EdgeInsets.only(left: 14, right: 14),
+                            buttonDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: Colors.black26,
+                              ),
+                              color: Colors.redAccent,
+                            ),
+                            buttonElevation: 2,
+                            itemHeight: 40,
+                            itemPadding:
+                                const EdgeInsets.only(left: 14, right: 14),
+                            dropdownMaxHeight: 200,
+                            dropdownWidth: 200,
+                            dropdownPadding: null,
+                            dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: Colors.redAccent,
+                            ),
+                            dropdownElevation: 8,
+                            scrollbarRadius: const Radius.circular(40),
+                            scrollbarThickness: 6,
+                            scrollbarAlwaysShow: true,
+                            offset: const Offset(-20, 0),
                           ),
-                          hint: Text(
-                            'Please choose a position',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          value: _selectedTest,
-                          items: _dropdownTestItems,
-                          onChanged: onChangeDropdownTests,
                         ),
-                        // ElevatedButton(
-                        //   onPressed: () {
-                        //     Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) => FilePickerDemo()));
-                        //   },
-                        //   child: Text('FilePicker Demo'),
-                        // ),
                         Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -164,6 +173,7 @@ class _DetailInterviewerState extends State<DetailInterviewer> {
                                       MaterialPageRoute(
                                         builder: (context) => PaymentPage(
                                           TransactionModel(
+                                            position: selectedValue.toString(),
                                             userHrId: widget.humanResources.id
                                                 .toString(),
                                             nameUser:
@@ -182,13 +192,6 @@ class _DetailInterviewerState extends State<DetailInterviewer> {
                                     );
                                   },
                                   child: Text('Payment'))
-                              // if (file != null)
-                              //   ElevatedButton(
-                              //     onPressed: () {
-                              //       viewFile(file!);
-                              //     },
-                              //     child: Text('View Selected File'),
-                              //   )
                             ],
                           ),
                         ),
@@ -245,10 +248,6 @@ class _DetailInterviewerState extends State<DetailInterviewer> {
 
   // multiple file selected
   // navigate user to 2nd screen to show selected files
-  void loadSelectedFiles(List<PlatformFile> files) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => FileList(files: files, onOpenedFile: viewFile)));
-  }
 
   // open the picked file
   void viewFile(PlatformFile file) {

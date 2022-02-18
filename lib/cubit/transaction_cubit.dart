@@ -22,14 +22,57 @@ class TransactionCubit extends Cubit<TransactionState> {
     }
   }
 
-  void fetchTransaction() async {
+  void updateUserAccept(String docid) async {
     try {
       emit(TransactionLoading());
-      Future.delayed(Duration(seconds: 10));
+      await TransactionService().updateUserAccept(docid);
+      emit(TransactionSuccess([]));
+    } catch (e) {
+      emit(TransactionFailed(e.toString()));
+    }
+  }
+
+  void updateUserDeny(String docid) async {
+    try {
+      emit(TransactionLoading());
+      await TransactionService().updateUserDeny(docid);
+      emit(TransactionSuccess([]));
+    } catch (e) {
+      emit(TransactionFailed(e.toString()));
+    }
+  }
+
+  void fetchTransaction(String id) async {
+    try {
+      emit(TransactionLoading());
+
       List<TransactionModel> transactions =
-          await TransactionService().fetchTransaction();
+          await TransactionService().fetchTransaction(id);
 
       emit(TransactionSuccess(transactions));
+    } catch (e) {
+      emit(TransactionFailed(e.toString()));
+    }
+  }
+
+  void fetchTransactionUser(String idTransactionUser) async {
+    try {
+      emit(TransactionLoading());
+      emit(TransactionLoading());
+      List<TransactionModel> transactions =
+          await TransactionService().fetchTransactionUser(idTransactionUser);
+
+      emit(TransactionSuccess(transactions));
+    } catch (e) {
+      emit(TransactionFailed(e.toString()));
+    }
+  }
+
+  void getCurrentUserHr(String id) async {
+    try {
+      TransactionModel transactions =
+          await TransactionService().getUserHrById(id);
+      emit(TransactionSuccess(transactions as List<TransactionModel>));
     } catch (e) {
       emit(TransactionFailed(e.toString()));
     }
