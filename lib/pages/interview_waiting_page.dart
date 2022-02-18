@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
+import 'package:flutter_application_motionhack/model/interview_model.dart';
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
+import 'package:flutter_application_motionhack/pages/schedule_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_file/open_file.dart';
 import 'dart:convert';
@@ -32,8 +34,15 @@ class _InterviewWaitingPageState extends State<InterviewWaitingPage> {
               listener: (context, state) {
                 // TODO: implement listener
                 if (state is TransactionSuccess) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/success-page', (route) => false);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SchedulePage(InterviewModel(
+                              transactionId: widget.transaction.id,
+                              userId: widget.transaction.userId,
+                              userHrId: widget.transaction.userHrId,
+                              nameUser: widget.transaction.nameUser,
+                              nameHR: widget.transaction.nameHR))));
                 } else if (state is TransactionFailed) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

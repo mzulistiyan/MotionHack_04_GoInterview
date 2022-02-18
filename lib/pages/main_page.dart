@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_motionhack/cubit/auth_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/page_cubit.dart';
 import 'package:flutter_application_motionhack/pages/home_page.dart';
 import 'package:flutter_application_motionhack/pages/interviewer_list_page.dart';
@@ -74,7 +75,14 @@ class MainPage extends StatelessWidget {
           body: Stack(
             children: [
               buildContent(currentIndex),
-              CustomButtonNavigation(),
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  if (state is AuthSuccess && state.user.level == 2) {
+                    return SizedBox();
+                  }
+                  return CustomButtonNavigation();
+                },
+              ),
             ],
           ),
         );

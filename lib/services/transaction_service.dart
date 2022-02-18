@@ -93,11 +93,13 @@ class TransactionService {
     }
   }
 
-  Future<List<TransactionModel>> fetchTransactionUser(String id) async {
+  Future<List<TransactionModel>> fetchTransactionUser(
+      String id, String userId) async {
     try {
       QuerySnapshot result = await FirebaseFirestore.instance
           .collection('transactions')
           .where('confirmation_status', isEqualTo: 'Accept')
+          .where('userId', isEqualTo: userId)
           .get();
       List<TransactionModel> transaction = result.docs.map((e) {
         return TransactionModel.fromJson(

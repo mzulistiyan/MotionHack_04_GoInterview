@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/cubit/auth_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/coba_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/humanresources_cubit.dart';
+import 'package:flutter_application_motionhack/cubit/interview_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/page_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
 import 'package:flutter_application_motionhack/pages/detail_interview.dart';
@@ -43,6 +44,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CobaCubit(),
+        ),
+        BlocProvider(
+          create: (context) => InterviewCubit(),
         )
       ],
       child: MaterialApp(

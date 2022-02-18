@@ -1,35 +1,41 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-class TransactionModel extends Equatable {
+class InterviewModel extends Equatable {
   final String id;
+  final String transactionId;
   final String userId;
   final String userHrId;
   final String nameUser;
   final String nameHR;
-  final String schedule;
+  final String date;
+  final String time;
   final String feedback;
   final String link;
 
-  TransactionModel({
+  InterviewModel({
     this.id = '',
+    required this.transactionId,
     required this.userId,
     required this.userHrId,
     required this.nameUser,
     required this.nameHR,
-    required this.link,
-    required this.schedule,
+    this.link = '',
+    this.date = '',
+    this.time = '',
     this.feedback = '',
   });
 
-  factory TransactionModel.fromJson(String id, Map<String, dynamic> json) =>
-      TransactionModel(
+  factory InterviewModel.fromJson(String id, Map<String, dynamic> json) =>
+      InterviewModel(
         id: id,
+        transactionId: json['transactionId'].toString(),
         nameUser: json['nameUser'].toString(),
         userId: json['userId'].toString(),
         userHrId: json['userHrId'].toString(),
         nameHR: json['nameHR'].toString(),
-        schedule: json['schedule'].toString(),
+        date: json['date'].toString(),
+        time: json['time'].toString(),
         feedback: json['feedback'].toString(),
         link: json['link'].toString(),
       );
@@ -40,9 +46,11 @@ class TransactionModel extends Equatable {
         'userId': userId,
         'userHrId': userHrId,
         'nameHR': nameHR,
-        'schedule': schedule,
+        'date': date,
+        'time': time,
         'feedback': feedback,
         'link': link,
+        'transactionId': transactionId,
       };
 
   @override
@@ -52,8 +60,10 @@ class TransactionModel extends Equatable {
         userId,
         userHrId,
         nameHR,
-        schedule,
+        date,
+        time,
         feedback,
         link,
+        transactionId
       ];
 }

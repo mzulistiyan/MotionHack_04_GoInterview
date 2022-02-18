@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_motionhack/cubit/interview_cubit.dart';
+import 'package:flutter_application_motionhack/model/interview_model.dart';
+import 'package:flutter_application_motionhack/model/transaction_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
-class StatusPage extends StatefulWidget {
+class SchedulePage extends StatefulWidget {
+  final InterviewModel interview;
+  SchedulePage(this.interview, {Key? key}) : super(key: key);
+
   @override
-  _StatusPageState createState() => _StatusPageState();
+  State<SchedulePage> createState() => _SchedulePageState();
 }
 
-class _StatusPageState extends State<StatusPage> {
+class _SchedulePageState extends State<SchedulePage> {
   String _date = "Not set";
+
   String _time = "Not set";
 
-  @override
   void initState() {
     super.initState();
   }
@@ -104,7 +111,6 @@ class _StatusPageState extends State<StatusPage> {
                     _time = '${time.hour} : ${time.minute} : ${time.second}';
                     setState(() {});
                   }, currentTime: DateTime.now(), locale: LocaleType.en);
-                  setState(() {});
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -145,6 +151,47 @@ class _StatusPageState extends State<StatusPage> {
                   ),
                 ),
                 color: Colors.white,
+              ),
+              Text(_time),
+              BlocConsumer<InterviewCubit, InterviewState>(
+                listener: (context, state) {
+                  // TODO: implement listener
+                  if (state is InterviewSuccess) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/success-page', (route) => false);
+                  } else if (state is InterviewFailed) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: Text(state.error),
+                      ),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state is InterviewLoading) {
+                    return Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 30),
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return Column(
+                    children: [
+                      Text('Holla'),
+                      Text(widget.interview.transactionId),
+                      ElevatedButton(
+                          onPressed: () {
+                            context.read<InterviewCubit>().createInterview(
+                                widget.interview,
+                                widget.interview.transactionId,
+                                _date,
+                                _time);
+                          },
+                          child: Text('Submit')),
+                    ],
+                  );
+                },
               )
             ],
           ),

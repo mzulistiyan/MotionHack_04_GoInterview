@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
 
     User? user = FirebaseAuth.instance.currentUser;
     context.read<HumanresourcesCubit>().fetchHumanResources();
-    context.read<TransactionCubit>().fetchTransactionUser(user!.uid);
+    context.read<TransactionCubit>().fetchTransactionUser(user!.uid, user.uid);
     context.read<CobaCubit>().fetchCoba();
     super.initState();
   }

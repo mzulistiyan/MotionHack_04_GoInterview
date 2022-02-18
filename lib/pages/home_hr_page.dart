@@ -23,7 +23,6 @@ class HomeHrPage extends StatefulWidget {
 class _HomeHrPageState extends State<HomeHrPage> {
   void initState() {
     // TODO: implement initState
-
     User? user = FirebaseAuth.instance.currentUser;
     context.read<HumanresourcesCubit>().fetchHumanResources();
     context.read<TransactionCubit>().fetchTransaction(user!.uid);
@@ -120,66 +119,65 @@ class _HomeHrPageState extends State<HomeHrPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // BlocConsumer<AuthCubit, AuthState>(
-                //   listener: (context, state) {
-                //     // TODO: implement listener
-                //     if (state is AuthFailed) {
-                //       print('Hallos');
-                //       ScaffoldMessenger.of(context).showSnackBar(
-                //         SnackBar(
-                //           backgroundColor: Colors.red,
-                //           content: Text(state.error),
-                //         ),
-                //       );
-                //     } else if (state is AuthInitial) {
-                //       print('Hallos');
-                //       Navigator.pushNamedAndRemoveUntil(
-                //           context, '/sign-in', (route) => false);
-                //     }
-                //   },
-                //   builder: (context, state) {
-                //     if (state is AuthLoading) {
-                //       return Center(
-                //         child: CircularProgressIndicator(),
-                //       );
-                //     }
-                //     return Container(
-                //       child: TextButton(
-                //         onPressed: () {
-                //           context.read<AuthCubit>().signOut();
-                //         },
-                //         child: Text('LOGOUT'),
-                //       ),
-                //     );
-                //   },
-                // ),
-                // BlocConsumer<TransactionCubit, TransactionState>(
-                //   listener: (context, state) {
-                //     // TODO: implement listener
-                //     if (state is TransactionFailed) {
-                //       print('error');
-                //       ScaffoldMessenger.of(context).showSnackBar(
-                //         SnackBar(
-                //           backgroundColor: Colors.red,
-                //           content: Text(state.error),
-                //         ),
-                //       );
-                //     }
-                //   },
-                //   builder: (context, state) {
-                //     if (state is TransactionSuccess) {
-                //       return Column(
-                //         children: [
-                //           Text('Home HR Page'),
-                //           listTransaction(state.transactions),
-                //         ],
-                //       );
-                //     }
-                //     return Center(
-                //       child: CircularProgressIndicator(),
-                //     );
-                // },
-                // ),
+                BlocConsumer<AuthCubit, AuthState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                    if (state is AuthFailed) {
+                      print('Hallos');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(state.error),
+                        ),
+                      );
+                    } else if (state is AuthInitial) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/sign-in', (route) => false);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is AuthLoading) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return Container(
+                      child: TextButton(
+                        onPressed: () {
+                          context.read<AuthCubit>().signOut();
+                        },
+                        child: Text('LOGOUT'),
+                      ),
+                    );
+                  },
+                ),
+                BlocConsumer<TransactionCubit, TransactionState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                    if (state is TransactionFailed) {
+                      print('error');
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(state.error),
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is TransactionSuccess) {
+                      return Column(
+                        children: [
+                          Text('Home HR Page'),
+                          listTransaction(state.transactions),
+                        ],
+                      );
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
               ],
             ),
           );
