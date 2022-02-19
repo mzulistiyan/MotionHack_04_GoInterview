@@ -22,10 +22,14 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushNamedAndRemoveUntil(
             context, '/sign-in', (route) => false);
       } else {
-        print(user);
         context.read<AuthCubit>().getCurrentUser(user.uid);
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/main-page', (route) => false);
+        if (user.uid == 'SS5ODoSDtggmrviRnain7fGVvCk2') {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/home-hr-page', (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/main-page', (route) => false);
+        }
       }
     });
     super.initState();
@@ -33,14 +37,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
-      body: ListView(
-        children: [
-          Text(
-            'SPLASHSCREEN',
-          )
-        ],
-      ),
-    );
+        backgroundColor: Color(0xff0353A4),
+        body: SafeArea(
+          child: Container(
+            margin: EdgeInsets.zero,
+            child: Image.asset(
+              'assets/splash_screen.png',
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
+          ),
+        ));
   }
 }

@@ -49,7 +49,7 @@ class TransactionService {
   Future<void> updateUserDeny(String docid) async {
     return _transactionReference
         .doc(docid)
-        .update({'confirmation_status': 'Deny'})
+        .update({'confirmation_status': 'Denied'})
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }
@@ -99,6 +99,26 @@ class TransactionService {
       QuerySnapshot result = await FirebaseFirestore.instance
           .collection('transactions')
           .where('confirmation_status', isEqualTo: 'Accept')
+          .where('userId', isEqualTo: userId)
+          .get();
+      List<TransactionModel> transaction = result.docs.map((e) {
+        return TransactionModel.fromJson(
+            e.id, e.data() as Map<String, dynamic>);
+      }).toList();
+
+      return transaction;
+    } catch (e) {
+      print('Error');
+      print(e.toString());
+      throw e;
+    }
+  }
+
+  Future<List<TransactionModel>> fetchTransactionUserStatus(
+      String id, String userId) async {
+    try {
+      QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('transactions')
           .where('userId', isEqualTo: userId)
           .get();
       List<TransactionModel> transaction = result.docs.map((e) {

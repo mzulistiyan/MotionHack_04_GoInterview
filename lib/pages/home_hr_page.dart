@@ -7,11 +7,18 @@ import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
 import 'package:flutter_application_motionhack/model/user_hr_model.dart';
 import 'package:flutter_application_motionhack/model/user_model.dart';
+import 'package:flutter_application_motionhack/pages/profile_page.dart';
 import 'package:flutter_application_motionhack/pages/succes_page.dart';
 import 'package:flutter_application_motionhack/pages/trash.dart';
+import 'package:flutter_application_motionhack/pages/widget/interview_status_card.dart';
+import 'package:flutter_application_motionhack/pages/widget/interview_status_card_transaction.dart';
 import 'package:flutter_application_motionhack/pages/widget/list_hr_card.dart';
+import 'package:flutter_application_motionhack/pages/widget/list_hr_card_user.dart';
 import 'package:flutter_application_motionhack/pages/widget/list_user.dart';
+import 'package:flutter_application_motionhack/pages/widget/list_user_interview.dart';
+import 'package:flutter_application_motionhack/shared/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeHrPage extends StatefulWidget {
   const HomeHrPage({Key? key}) : super(key: key);
@@ -31,6 +38,17 @@ class _HomeHrPageState extends State<HomeHrPage> {
 
   @override
   Widget build(BuildContext context) {
+    Widget listHistoryTransaction(List<TransactionModel> userId) {
+      return Container(
+          child: Column(
+        children: userId.map(
+          (TransactionModel userId) {
+            return InterViewStatusTransaction(userId);
+          },
+        ).toList(),
+      ));
+    }
+
     Widget listTransaction(List<TransactionModel> userId) {
       final List<TransactionModel> user;
       return Container(
@@ -38,151 +56,104 @@ class _HomeHrPageState extends State<HomeHrPage> {
         children: userId.map((
           TransactionModel userId,
         ) {
-          return ListUser(userId);
+          return ListUserInterview(userId);
         }).toList(),
       ));
     }
 
     return Scaffold(
-      body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          if (state is AuthSuccess) {
-            return SafeArea(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    BlocConsumer<TransactionCubit, TransactionState>(
-                      listener: (context, state) {
-                        // TODO: implement listener
-                        if (state is TransactionFailed) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(state.error),
-                            ),
-                          );
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is TransactionSuccess) {
-                          return Column(
-                            children: [
-                              Text('HomeHrPage'),
-                              listTransaction(state.transactions),
-                            ],
-                          );
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    ),
-                    BlocConsumer<AuthCubit, AuthState>(
-                      listener: (context, state) {
-                        // TODO: implement listener
-                        if (state is AuthFailed) {
-                          print('Hallos');
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: Colors.red,
-                              content: Text(state.error),
-                            ),
-                          );
-                        } else if (state is AuthInitial) {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/sign-in', (route) => false);
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is AuthLoading) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return Container(
-                          child: TextButton(
-                            onPressed: () {
-                              context.read<AuthCubit>().signOut();
-                            },
-                            child: Text('LOGOUT'),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+        body: ListView(
+      children: [
+        BlocConsumer<TransactionCubit, TransactionState>(
+          listener: (context, state) {
+            // TODO: implement listener
+            if (state is TransactionFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text(state.error),
                 ),
-              ),
-            );
-          }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BlocConsumer<AuthCubit, AuthState>(
-                  listener: (context, state) {
-                    // TODO: implement listener
-                    if (state is AuthFailed) {
-                      print('Hallos');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text(state.error),
-                        ),
-                      );
-                    } else if (state is AuthInitial) {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/sign-in', (route) => false);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is AuthLoading) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return Container(
-                      child: TextButton(
-                        onPressed: () {
-                          context.read<AuthCubit>().signOut();
-                        },
-                        child: Text('LOGOUT'),
-                      ),
-                    );
-                  },
-                ),
-                BlocConsumer<TransactionCubit, TransactionState>(
-                  listener: (context, state) {
-                    // TODO: implement listener
-                    if (state is TransactionFailed) {
-                      print('error');
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Colors.red,
-                          content: Text(state.error),
-                        ),
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is TransactionSuccess) {
-                      return Column(
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is TransactionSuccess) {
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    color: primaryColor,
+                    height: 60,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('Home HR Page'),
-                          listTransaction(state.transactions),
+                          Text(
+                            'GoInterview',
+                            style: GoogleFonts.poppins(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfilePage()));
+                            },
+                            child: Image.asset(
+                              'assets/profile.png',
+                              width: 32,
+                              height: 32,
+                            ),
+                          )
                         ],
-                      );
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-    );
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 40),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Upcoming Interview',
+                          style: GoogleFonts.poppins(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 16,
+                        ),
+                        listTransaction(state.transactions),
+                        SizedBox(height: 40),
+                        Text(
+                          'Interview List',
+                          style: GoogleFonts.poppins(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                        listHistoryTransaction(state.transactions),
+                        SizedBox(
+                          height: 50,
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        ),
+      ],
+    ));
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter_application_motionhack/cubit/auth_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/page_cubit.dart';
 import 'package:flutter_application_motionhack/pages/home_page.dart';
 import 'package:flutter_application_motionhack/pages/interviewer_list_page.dart';
+import 'package:flutter_application_motionhack/pages/order_status_page.dart';
 import 'package:flutter_application_motionhack/pages/profile_page.dart';
-import 'package:flutter_application_motionhack/pages/status_page.dart';
 import 'package:flutter_application_motionhack/pages/widget/custom_bottom_nav.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,7 +22,7 @@ class MainPage extends StatelessWidget {
           return InterviewerListPage();
           break;
         case 2:
-          return StatusPage();
+          return OrderStatusPage();
           break;
         case 3:
           return ProfilePage();
@@ -38,29 +38,28 @@ class MainPage extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: 60,
-          margin: EdgeInsets.only(bottom: 30, left: 12, right: 12, top: 30),
+          margin: EdgeInsets.only(top: 50),
           decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            color: Color(0xff0353A4),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               CustomBottomNav(
                 index: 0,
-                imageUrl: 'assets/icon_home.png',
+                imageUrl: 'assets/home.png',
               ),
               CustomBottomNav(
                 index: 1,
-                imageUrl: 'assets/icon_booking.png',
+                imageUrl: 'assets/list.png',
               ),
               CustomBottomNav(
                 index: 2,
-                imageUrl: 'assets/icon_card.png',
+                imageUrl: 'assets/clipboard.png',
               ),
               CustomBottomNav(
                 index: 3,
-                imageUrl: 'assets/icon_settings.png',
+                imageUrl: 'assets/user.png',
               ),
             ],
           ),

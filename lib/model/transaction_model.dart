@@ -24,7 +24,7 @@ class TransactionModel extends Equatable {
     required this.fileResume,
     required this.fileMotivationLetter,
     required this.filePortofolio,
-    this.confirmation_status = 'waiting',
+    this.confirmation_status = 'Waiting',
     this.payment_status = 'paid',
     this.price = 50000,
   });

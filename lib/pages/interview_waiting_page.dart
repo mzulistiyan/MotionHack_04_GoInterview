@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
 import 'package:flutter_application_motionhack/model/interview_model.dart';
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
-import 'package:flutter_application_motionhack/pages/schedule_page.dart';
+import 'package:flutter_application_motionhack/pages/schedule2_page.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_file/open_file.dart';
-import 'dart:convert';
 
 class InterviewWaitingPage extends StatefulWidget {
   final TransactionModel transaction;
@@ -37,12 +36,14 @@ class _InterviewWaitingPageState extends State<InterviewWaitingPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SchedulePage(InterviewModel(
-                              transactionId: widget.transaction.id,
-                              userId: widget.transaction.userId,
-                              userHrId: widget.transaction.userHrId,
-                              nameUser: widget.transaction.nameUser,
-                              nameHR: widget.transaction.nameHR))));
+                          builder: (context) => SchedulePages(
+                              InterviewModel(
+                                  transactionId: widget.transaction.id,
+                                  userId: widget.transaction.userId,
+                                  userHrId: widget.transaction.userHrId,
+                                  nameUser: widget.transaction.nameUser,
+                                  nameHR: widget.transaction.nameHR),
+                              widget.transaction)));
                 } else if (state is TransactionFailed) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

@@ -68,6 +68,20 @@ class TransactionCubit extends Cubit<TransactionState> {
     }
   }
 
+  void fetchTransactionUserStatus(
+      String idTransactionUser, String userId) async {
+    try {
+      emit(TransactionLoading());
+      emit(TransactionLoading());
+      List<TransactionModel> transactions = await TransactionService()
+          .fetchTransactionUserStatus(idTransactionUser, userId);
+
+      emit(TransactionSuccess(transactions));
+    } catch (e) {
+      emit(TransactionFailed(e.toString()));
+    }
+  }
+
   void getCurrentUserHr(String id) async {
     try {
       TransactionModel transactions =

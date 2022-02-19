@@ -22,24 +22,24 @@ class CustomBottomNav extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(),
+          Container(
+            width: 50,
+            height: 5,
+            decoration: BoxDecoration(
+                color: context.read<PageCubit>().state == index
+                    ? Color(0xff7BAFFE)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(12)),
+          ),
           Image.asset(
             imageUrl,
             width: 24,
             height: 24,
             color: context.read<PageCubit>().state == index
-                ? Colors.red
-                : Colors.grey,
+                ? Colors.white
+                : Colors.white,
           ),
-          Container(
-            width: 30,
-            height: 2,
-            decoration: BoxDecoration(
-                color: context.read<PageCubit>().state == index
-                    ? Colors.red
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(12)),
-          )
+          SizedBox()
         ],
       ),
     );

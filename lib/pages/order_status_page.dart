@@ -1,24 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/cubit/auth_cubit.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_application_motionhack/cubit/humanresources_cubit.dart';
 import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
-
+import 'package:flutter_application_motionhack/pages/widget/interview_status_card.dart';
+import 'package:flutter_application_motionhack/pages/widget/list_hr_card_user.dart';
 import 'package:flutter_application_motionhack/pages/widget/list_user.dart';
+
 import 'package:flutter_application_motionhack/shared/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class OrderStatusPage extends StatefulWidget {
+  const OrderStatusPage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _OrderStatusPageState createState() => _OrderStatusPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _OrderStatusPageState extends State<OrderStatusPage> {
   @override
   void initState() {
     // TODO: implement initState
@@ -30,7 +31,9 @@ class _HomePageState extends State<HomePage> {
       Navigator.pushNamedAndRemoveUntil(context, '/sign-in', (route) => false);
     } else {
       context.read<HumanresourcesCubit>().fetchHumanResources();
-      context.read<TransactionCubit>().fetchTransactionUser(user.uid, user.uid);
+      context
+          .read<TransactionCubit>()
+          .fetchTransactionUserStatus(user.uid, user.uid);
     }
 
     super.initState();
@@ -38,12 +41,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget listTransaction(List<TransactionModel> userId) {
+    Widget listHistoryTransaction(List<TransactionModel> userId) {
       return Container(
           child: Column(
         children: userId.map(
           (TransactionModel userId) {
-            return ListTransactionuser(userId);
+            return InterViewStatus(userId);
           },
         ).toList(),
       ));
@@ -93,33 +96,21 @@ class _HomePageState extends State<HomePage> {
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20),
-                                  child: Container(
-                                    width: double.infinity,
-                                    child: Image.asset(
-                                      'assets/screen_home.png',
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Upcoming Interview',
+                                        'Interview Status',
                                         style: GoogleFonts.poppins(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w600),
                                       ),
+                                      listHistoryTransaction(
+                                          state.transactions),
                                       SizedBox(
-                                        height: 16,
-                                      ),
-                                      listTransaction(state.transactions),
+                                        height: 50,
+                                      )
                                     ],
                                   ),
                                 ),
