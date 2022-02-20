@@ -1,16 +1,3 @@
-# flutter_application_motionhack
+Go Interview merupakan sebuah produk atau platform untuk mempertemukan Job Seeker dan Human Resource atau User interviewer.Ide bisnis ini bermula dari teman - teman saya saat Sekolah Menengah Atas (SMA) dan saat kuliah di Telkom University yang mulai bingung akan menjadi apa di masa mendatang dan juga belum siapnya mereka menghadapi persaingan didunia kerja.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Go Interview sendiri memiliki beberapa kelebihan dan kekurangan tersendiri dalam model bisnisnya. Seperti hanya perlu membuat sebuah server untuk mempertemukan antara pengguna dan Human Resource seperti bisnis Gojek yang mempertemukan antara driver dengan penumpang. Namun hal ini juga menjadi kelemahan karena Go Interview harus bergantung kepada mitra. Namun memang modal untuk membangun bisnis Go Interview tidak terlalu besa.
