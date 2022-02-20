@@ -52,12 +52,14 @@ class _SchedulePagesState extends State<SchedulePages> {
               SizedBox(
                 width: 15,
               ),
-              Text('Interview Schedule',
-                  style: GoogleFonts.poppins(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  )),
+              Text(
+                'Interview Schedule',
+                style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ],
           ),
         ),
@@ -92,7 +94,7 @@ class _SchedulePagesState extends State<SchedulePages> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.user.nameUser,
+                            'John Doe',
                             style: GoogleFonts.poppins(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
@@ -326,35 +328,8 @@ class _SchedulePagesState extends State<SchedulePages> {
                                     listener: (context, state) {
                                       // TODO: implement listener
                                       if (state is InterviewSuccess) {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    InterviewDetaiAcceptlPage(
-                                                        TransactionModel(
-                                                            userId: widget
-                                                                .user.userId,
-                                                            userHrId:
-                                                                widget
-                                                                    .user.userHrId,
-                                                            nameUser:
-                                                                widget
-                                                                    .user.nameUser,
-                                                            nameHR:
-                                                                widget
-                                                                    .user.nameHR,
-                                                            position: widget
-                                                                .userTrans
-                                                                .position,
-                                                            fileResume:
-                                                                widget.userTrans
-                                                                    .fileResume,
-                                                            fileMotivationLetter:
-                                                                widget.userTrans
-                                                                    .fileResume,
-                                                            filePortofolio: widget
-                                                                .userTrans
-                                                                .filePortofolio))));
+                                        Navigator.pushNamed(
+                                            context, '/home-hr-page');
                                       } else if (state is InterviewFailed) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(

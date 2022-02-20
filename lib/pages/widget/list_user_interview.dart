@@ -10,6 +10,7 @@ import 'package:flutter_application_motionhack/pages/interview_detail_page.dart'
 import 'package:flutter_application_motionhack/pages/interviewer_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ListUserInterview extends StatelessWidget {
   final TransactionModel userHr;
@@ -105,11 +106,14 @@ class ListUserInterview extends StatelessWidget {
                     ),
                     child: Center(
                         child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => InterviewFinishedPage()));
+                      onPressed: () async {
+                        const url = 'https://google.com';
+
+                        if (await canLaunch(url)) {
+                          await launch(url, forceSafariVC: false);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
                       },
                       child: Text(
                         'Attend',

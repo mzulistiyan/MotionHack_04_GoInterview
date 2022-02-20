@@ -120,6 +120,9 @@ class _HomePageState extends State<HomePage> {
                                         height: 16,
                                       ),
                                       listTransaction(state.transactions),
+                                      SizedBox(
+                                        height: 80,
+                                      )
                                     ],
                                   ),
                                 ),

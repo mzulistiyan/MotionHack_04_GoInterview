@@ -1,19 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/cubit/transaction_cubit.dart';
 import 'package:flutter_application_motionhack/model/interview_model.dart';
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
-import 'package:flutter_application_motionhack/pages/interview_detail_accept_page.dart';
-import 'package:flutter_application_motionhack/pages/interview_detail_finished_page.dart';
 import 'package:flutter_application_motionhack/pages/schedule2_page.dart';
 
 import 'package:flutter_application_motionhack/shared/theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class InterviewDetailPage extends StatelessWidget {
+class InterviewDetailPage extends StatefulWidget {
   final TransactionModel user;
   const InterviewDetailPage(this.user, {Key? key}) : super(key: key);
 
+  @override
+  State<InterviewDetailPage> createState() => _InterviewDetailPageState();
+}
+
+class _InterviewDetailPageState extends State<InterviewDetailPage> {
+  User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -78,7 +83,7 @@ class InterviewDetailPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            user.nameUser,
+                            widget.user.nameUser,
                             style: GoogleFonts.poppins(
                                 fontSize: 24, fontWeight: FontWeight.bold),
                           ),
@@ -101,7 +106,7 @@ class InterviewDetailPage extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                user.confirmation_status,
+                                widget.user.confirmation_status,
                                 style: GoogleFonts.poppins(
                                     fontSize: 10, color: Color(0xff8FA8CD)),
                               ),
@@ -204,61 +209,17 @@ class InterviewDetailPage extends StatelessWidget {
                           listener: (context, state) {
                             // TODO: implement listener
                             if (state is TransactionSuccess) {
-                              Navigator.pushNamed(context, '/');
-                            } else if (state is TransactionFailed) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text(state.error),
-                                ),
-                              );
-                            }
-                          },
-                          builder: (context, state) {
-                            return Container(
-                              width: 110,
-                              height: 35,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                border: Border.all(color: Color(0xff7BAFFE)),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                  child: TextButton(
-                                onPressed: () {
-                                  context
-                                      .read<TransactionCubit>()
-                                      .updateUserDeny(user.id);
-                                },
-                                child: Text(
-                                  'Deny',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: Color(0xff7BAFFE),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              )),
-                            );
-                          },
-                        ),
-                        BlocConsumer<TransactionCubit, TransactionState>(
-                          listener: (context, state) {
-                            // TODO: implement listener
-                            if (state is TransactionSuccess) {
                               Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SchedulePages(
-                                      InterviewModel(
-                                          transactionId: user.id,
-                                          userId: user.userId,
-                                          userHrId: user.userHrId,
-                                          nameUser: user.nameUser,
-                                          nameHR: user.nameHR),
-                                      user),
-                                ),
-                              );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SchedulePages(
+                                          InterviewModel(
+                                              transactionId: widget.user.id,
+                                              userId: widget.user.userId,
+                                              userHrId: widget.user.userHrId,
+                                              nameUser: widget.user.nameUser,
+                                              nameHR: widget.user.nameHR),
+                                          widget.user)));
                             } else if (state is TransactionFailed) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
@@ -269,32 +230,76 @@ class InterviewDetailPage extends StatelessWidget {
                             }
                           },
                           builder: (context, state) {
-                            return Container(
-                              width: 110,
-                              height: 35,
-                              decoration: BoxDecoration(
-                                color: primaryColor,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                  child: TextButton(
-                                onPressed: () {
-                                  context
-                                      .read<TransactionCubit>()
-                                      .updateUserAccept(user.id);
-                                },
-                                child: Text(
-                                  'Accept',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
+                            if (state is TransactionLoading) {
+                              return Container(
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.only(top: 30),
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  width: 110,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    border:
+                                        Border.all(color: Color(0xff7BAFFE)),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        context
+                                            .read<TransactionCubit>()
+                                            .updateUserDeny(widget.user.id);
+                                      },
+                                      child: Text(
+                                        'Deny',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          color: Color(0xff7BAFFE),
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              )),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Container(
+                                  width: 110,
+                                  height: 35,
+                                  decoration: BoxDecoration(
+                                    color: primaryColor,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        context
+                                            .read<TransactionCubit>()
+                                            .updateUserAccept(widget.user.id);
+                                      },
+                                      child: Text(
+                                        'Accept',
+                                        style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             );
                           },
-                        ),
+                        )
                       ],
                     ),
                   )

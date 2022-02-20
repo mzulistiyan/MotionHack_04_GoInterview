@@ -131,7 +131,7 @@ class _HomeHrPageState extends State<HomeHrPage> {
                         listTransaction(state.transactions),
                         SizedBox(height: 40),
                         Text(
-                          'Interview List',
+                          'Interviewee List',
                           style: GoogleFonts.poppins(
                               fontSize: 20, fontWeight: FontWeight.w600),
                         ),

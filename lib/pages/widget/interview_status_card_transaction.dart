@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_motionhack/model/transaction_model.dart';
 import 'package:flutter_application_motionhack/pages/interview_detail_accept_page.dart';
 import 'package:flutter_application_motionhack/pages/interview_detail_page.dart';
+import 'package:flutter_application_motionhack/pages/interview_waiting_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InterViewStatusTransaction extends StatelessWidget {
@@ -57,7 +58,7 @@ class InterViewStatusTransaction extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'John Doe',
+                                listHr.nameUser,
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold),
                               ),
@@ -153,7 +154,7 @@ class InterViewStatusTransaction extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'John Doe',
+                                  listHr.nameUser,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black.withOpacity(0.5)),

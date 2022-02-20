@@ -5,6 +5,7 @@ import 'package:flutter_application_motionhack/pages/schedule2_page.dart';
 
 import 'package:flutter_application_motionhack/shared/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InterviewDetaiAcceptlPage extends StatelessWidget {
   final TransactionModel user;
@@ -241,12 +242,14 @@ class InterviewDetaiAcceptlPage extends StatelessWidget {
                                 ),
                                 child: Center(
                                     child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                InterviewFinishedPage()));
+                                  onPressed: () async {
+                                    const url = 'https://google.com';
+
+                                    if (await canLaunch(url)) {
+                                      await launch(url, forceSafariVC: false);
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
                                   },
                                   child: Text(
                                     'Attend',

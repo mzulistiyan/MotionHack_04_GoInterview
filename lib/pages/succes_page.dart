@@ -45,7 +45,7 @@ class SuccessPage extends StatelessWidget {
                   Navigator.pushNamed(context, '/main-page');
                 },
                 child: Text(
-                  'Pay Now',
+                  'Check Status',
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     color: Colors.white,
